@@ -1,0 +1,6 @@
+[run]
+branch = True
+source = ppt-app
+
+[report]
+ignore-errors = True

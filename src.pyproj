@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{b52d40c4-5763-410b-b352-9fa9f64b9dca}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>setup.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
+    <Content Include="test-requirements.txt" />
+    <Content Include="tox.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ppt-app\cli\main.py" />
+    <Compile Include="ppt-app\cli\__init__.py" />
+    <Compile Include="ppt-app\main.py" />
+    <Compile Include="ppt-app\rest\ApiError.py" />
+    <Compile Include="ppt-app\rest\BaseClient.py" />
+    <Compile Include="ppt-app\rest\TicketClient.py" />
+    <Compile Include="ppt-app\rest\__init__.py" />
+    <Compile Include="ppt-app\__init__.py" />
+    <Compile Include="setup.py" />
+    <Compile Include="tests\functional\runservice.py" />
+    <Compile Include="tests\functional\__init__.py" />
+    <Compile Include="tests\unit\test.py" />
+    <Compile Include="tests\unit\test_noop.py" />
+    <Compile Include="tests\unit\__init__.py" />
+    <Compile Include="tests\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ppt-app" />
+    <Folder Include="ppt-app\cli" />
+    <Folder Include="ppt-app\rest" />
+    <Folder Include="tests" />
+    <Folder Include="tests\functional" />
+    <Folder Include="tests\unit" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>
