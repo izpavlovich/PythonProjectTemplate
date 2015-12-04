@@ -9,3 +9,5 @@ coverage>=3.6
 discover
 mock>=1.0
 testtools>=0.9.36,!=1.2.0
+requests
+requests_mock

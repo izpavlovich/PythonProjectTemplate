@@ -1,11 +1,20 @@
-﻿import requests
-from ApiError import ApiError
+﻿import exceptions
+import requests
 
 
 class BaseClient(object):
-    """description of class"""
+    """
+    Base REST Client class. Use this class as super
+    class for specific endpoint clients.
+    """
 
     def __init__(self, baseurl, entity):
+        """
+        Base constructor. It creates endpoint client with
+        URL like baseurl/entity
+        @param baseurl: Static part of the entity URL
+        @param entity: Entity specific part of the URL
+        """
         self.entity = entity
         self.baseurl = baseurl
         self.fullurl = self.baseurl + "/" + self.entity
@@ -13,14 +22,19 @@ class BaseClient(object):
                         "accept": "application/json"}
 
     def get(self):
+        """Performes HTTP GET Request"""
         response = requests.get(self.fullurl,
                                 headers=self.headers)
         return self._checkResponse(response, [200])
 
     def post(self, payload):
+        """
+        Performes HTTP POST Request
+        @param payload: Data to be send inside the request's body
+        """
         response = requests.post(self.fullurl,
                                  headers=self.headers,
-                                 payload=payload)
+                                 data=payload)
         return self._checkResponse(response,
                                    [200, 201, 204])
 
@@ -32,8 +46,8 @@ class BaseClient(object):
                                    [200, 204])
 
     def delete(self):
-        response = requests.put(self.fullurl,
-                                headers=self.headers)
+        response = requests.delete(self.fullurl,
+                                   headers=self.headers)
         return self._checkResponse(response,
                                    [200, 202, 204])
 
@@ -45,7 +59,7 @@ class BaseClient(object):
 
     def _checkResponse(self, response, allowedCodes):
         if response.status_code not in allowedCodes:
-            raise ApiError("{} /{}/ {} {} {}".format(
+            raise exceptions.ApiError("{} /{}/ {} {} {}".format(
                 response.request.method,
                 self.entity,
                 response.status_code,
@@ -58,11 +72,18 @@ class BaseClient(object):
             return None
 
         if not self._validateResponseType(response.headers['Content-Type']):
-            raise ApiError("{} /{}/ {} {} {}".format(
+            raise exceptions.ApiError("{} /{}/ {} {} {}".format(
                 response.request.method,
                 self.entity,
                 response.status_code,
                 "Response is not JSON content-type. Actual content-type: ",
                 response.headers['Content-Type']))
 
-        return response.json()
+        return response
+
+
+class TicketClient(BaseClient):
+    """description of class"""
+
+    def __init__(self, baseurl):
+        return super(TicketClient, self).__init__(baseurl, "posts")
